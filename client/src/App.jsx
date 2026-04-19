@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import './App.css';
 
 const ASCII_CHARS = " .:-=+*#%@";
+// const ASCII_CHARS = " .'-=+|*#@";
 
 function App() {
   const videoRef = useRef(null);
@@ -68,8 +69,18 @@ function App() {
 
 
   return (
-    <div style={{ padding: '30px', textAlign: 'center', background: '#111' }}>
-      <h2 style={{ color: 'white' }}>Live Webcam Feed</h2>
+    
+    <div style={{ padding: '10px', textAlign: 'center', background: '#111' , minHeight:"100vh" ,minWidth:"100vw" }}>
+      <h2 style={{ color: 'white' }}>LiveAscii</h2>
+      <div style={{
+        display:"flex",
+        flexDirection:"row",
+        flexWrap:"wrap",
+        justifyContent:'center',
+        alignItems:'flex-start',
+        gap:"40px"
+      }}>
+    
       
       <video 
         ref={videoRef} 
@@ -77,19 +88,32 @@ function App() {
         playsInline 
         width="640" 
         height="480"
-        style={{ border: '2px solid #555', transform: 'scaleX(-1)' }}
+        style={{ 
+          border: '2px solid #555',
+          transform: 'scaleX(-1)',
+          maxWidth:"100%" 
+        }}
       ></video>
 
       <pre
-      ref={asciiRef}
-      style={{transform:"scaleX(-1)"  ,fontFamily: 'monospace' , fontSize:"8px" , lineHeight:"8px" , color:"#fff" , margin:"0" }}
-      >
-      </pre>
+          ref={asciiRef}
+          style={{ 
+            transform: "scaleX(-1)", 
+            fontFamily: 'monospace', 
+            fontSize: "8px", 
+            lineHeight: "8px", 
+            color: "#fff", 
+            margin: "0",
+            textAlign: "left", 
+            overflow: "hidden" 
+          }}
+        ></pre>
+        </div>
 
       <canvas ref={canvasRef} width="100" height="60" style={{display:"none"}} > 
       </canvas>
-    </div>
-  );
+      </div>
+    );
 }
 
 export default App;
