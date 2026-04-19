@@ -1,13 +1,22 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 
-const ASCII_CHARS = " .:-=+*#%@";
+const ASCII_CHARS = " .'`^\",:;Iil!><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 // const ASCII_CHARS = " .'-=+|*#@";
 
 function App() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const asciiRef = useRef(null);
+
+  const [fontSizeUi,setFontSizeUi]=useState(4);
+  const fontSizeRef=useRef(4);
+
+  const handleSliderChange=(e)=>{
+    const val=parseInt(e.target.value,10);
+    setFontSizeUi(val);
+    fontSizeRef.current=val;
+  }
 
   useEffect(() => {
     const startWebcam=async () => {
@@ -36,6 +45,12 @@ function App() {
       if(video && canvas && video.readyState >=2)
       {
         const ctx= canvas.getContext('2d');
+        const currentFont = fontSizeRef.current;
+        const targetWidth = 640;
+        const targetHeight = 480;
+        canvas.width = Math.floor(targetWidth / (currentFont * 0.6));
+        canvas.height = Math.floor(targetHeight / currentFont);
+        
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         //Capturing pixels form canvas
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -72,10 +87,22 @@ function App() {
     
     <div style={{ padding: '10px', textAlign: 'center', background: '#111' , minHeight:"100vh" ,minWidth:"100vw" }}>
       <h2 style={{ color: 'white' }}>LiveAscii</h2>
+
+      <div style={{ marginBottom: '20px', color: 'white' }}>
+        <label style={{ marginRight: '10px' }}>Resolution (Font Size: {fontSizeUi}px)</label>
+        <input 
+          type="range" 
+          min="2" 
+          max="16" 
+          value={fontSizeUi} 
+          onChange={handleSliderChange} 
+        />
+      </div>
+
       <div style={{
         display:"flex",
         flexDirection:"row",
-        flexWrap:"wrap",
+        flexWrap:"nowrap",
         justifyContent:'center',
         alignItems:'flex-start',
         gap:"40px"
@@ -100,18 +127,18 @@ function App() {
           style={{ 
             transform: "scaleX(-1)", 
             fontFamily: 'monospace', 
-            fontSize: "8px", 
-            lineHeight: "8px", 
+            fontSize: `${fontSizeUi}px`, 
+            lineHeight: `${fontSizeUi}px`, 
             color: "#fff", 
             margin: "0",
             textAlign: "left", 
+            border:"2px solid #555",
             overflow: "hidden" 
           }}
         ></pre>
         </div>
 
-      <canvas ref={canvasRef} width="100" height="60" style={{display:"none"}} > 
-      </canvas>
+      <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
       </div>
     );
 }
