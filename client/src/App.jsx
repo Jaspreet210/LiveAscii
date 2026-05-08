@@ -9,14 +9,15 @@ function App() {
   const asciiRef = useRef(null);
 
   // --- STATE ENGINES ---
-  const [fontSizeUi, setFontSizeUi] = useState(9);
-  const fontSizeRef = useRef(9);
+  const [fontSizeUi, setFontSizeUi] = useState(7);
+  const fontSizeRef = useRef(7);
 
-  const [brightnessUi, setBrightnessUi] = useState(1.0);
-  const brightnessRef = useRef(1.0);
+  const [brightnessUi, setBrightnessUi] = useState(0.7);
+  const brightnessRef = useRef(0.7);
 
   const [contrastUi, setContrastUi] = useState(1.0);
   const contrastRef = useRef(1.0);
+
 
   // --- HANDLERS ---
   const handleResolutionChange = (e) => {
@@ -161,7 +162,7 @@ function App() {
               position: "absolute", top: 0, left: 0,
               fontFamily: "'Courier New', Courier, monospace",
               fontSize: "10px", lineHeight: "10px",
-              color: "#ddd", // Hardcoded back to Matrix Green!
+              color: "#ddd", 
               margin: "0", padding: "0", textAlign: "left", transformOrigin: "top left", 
               transform: `scale(${scaleX}, ${scaleY})`, 
               width: `${safeTextWidth}px`, height: `${safeTextHeight}px`,
